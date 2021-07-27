@@ -14,10 +14,13 @@ export class HipsterizecatService {
   constructor(private http: HttpClient) { }
 
   public post(shadesFile: File, catFile: File): Observable<File> {
-    console.log(typeof shadesFile);
+    
     var formData = new FormData();
-    formData.append('shades', shadesFile, shadesFile.name);
-    formData.append('cat', catFile, shadesFile.name);
+    formData.set('shades', shadesFile as File, shadesFile.name);
+    formData.set('cat', catFile as File, shadesFile.name);
+
+    var options = new Headers();
+    options.append('Content-Type', 'multipart/form-data');
     
     console.log('Sending post ...');
 
