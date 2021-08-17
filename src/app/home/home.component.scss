@@ -1,0 +1,25 @@
+.home {
+    width: 100%;
+    display: grid;
+    justify-content: center;  
+}
+
+.upload-card {
+    max-width: 550px;
+    padding: 20px;
+    margin: 20px;
+    justify-self: center;
+    background:rgba(255,255,255, 0.5);
+
+    p {
+        width: 100%;
+        display: grid;
+        justify-content: center;
+        color: #323a42;
+    }
+}
+
+button{
+    width: fit-content;
+    justify-self: center;
+}
