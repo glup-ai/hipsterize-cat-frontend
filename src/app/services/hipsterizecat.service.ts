@@ -9,6 +9,7 @@ import { ITS_JUST_ANGULAR } from '@angular/core/src/r3_symbols';
 export class HipsterizecatService {
 
   postUrl = "https://glup-ai-fa.azurewebsites.net/api/GlupHipsterCatHttpTrigger";
+  postLocalUrl = "http://localhost:7071/api/GlupCatHipsterizer";
   options = { headers: new HttpHeaders().set('Content-Type', 'multipart/form-data') };
 
   constructor(private http: HttpClient) { }
@@ -26,7 +27,7 @@ export class HipsterizecatService {
 
     // TODO: Fix failing post method
     return this.http.post<File>(
-      this.postUrl,
+      this.postLocalUrl,
       formData,
       {
         headers: {'Content-Type' : 'multipart/form-data'}
