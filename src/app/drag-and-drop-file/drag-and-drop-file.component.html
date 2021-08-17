@@ -1,0 +1,13 @@
+<div class="dropzone" appDragAndDropFile
+    (fileDropped)="onFileDropped($event)"
+    *ngIf="!uploadedImage">
+    <input type="file" #fileDropReference id="fileDropReference"
+    (change)="fileBrowseHandler($event)"/>
+    <img src="assets/img/fileupload.svg"/>
+    <h3>Drop files here</h3>
+    <h3>or</h3>
+    <label for="fileDropReference">Browse for file</label>
+</div>
+<div *ngIf="uploadedImage">
+    <img src={{uploadedImage}} width="400">
+</div>
