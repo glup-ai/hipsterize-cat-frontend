@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EMPTY, Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {ThemePalette} from '@angular/material/core';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +12,16 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent{
-
   title = 'Hipsterize your cat';
+
   catFile: File | null = null;
   shadesFile: File | null = null;
   hipsterizedCat: any = null;
   hipsterizedCatImageSrc: SafeUrl | null;
+  
+  isLoading = false;
+  color: ThemePalette = 'accent';
+  mode: ProgressSpinnerMode = 'indeterminate';
 
   constructor(private http: HttpClient, private domSanitizer: DomSanitizer){
     this.hipsterizedCatImageSrc = null;
@@ -23,27 +29,24 @@ export class HomeComponent{
 
   public hipsterizeCat(){
     if(this.catFile && this.shadesFile){
+      this.isLoading = true;
       this.getImage(this.shadesFile, this.catFile)
-        .pipe(catchError((error: Error) => throwError(error)))
-        .subscribe((response: ArrayBuffer) => {
-          let array = new Uint8Array(response);
-          let stringChar = array.reduce((data, byte) => {
-            return data + String.fromCharCode(byte);
-          }, '');
-          let base64string = btoa(stringChar);
-          this.hipsterizedCatImageSrc = this.domSanitizer.bypassSecurityTrustUrl(
-            'data:image/jpg;base64, ' + base64string
-          );
-        }
+        .pipe(take(1))
+        .subscribe(
+          (response: ArrayBuffer) => {
+            let array = new Uint8Array(response);
+            let stringChar = array.reduce((data, byte) => {
+              return data + String.fromCharCode(byte);
+            }, '');
+            let base64string = btoa(stringChar);
+            this.hipsterizedCatImageSrc = this.domSanitizer.bypassSecurityTrustUrl(
+              'data:image/jpg;base64, ' + base64string
+            );
+          },
+          (error: Error) => throwError(error),
+          () => this.isLoading = false
       )
     }
-  }
-
-  public reset(){
-    this.catFile = null; 
-    this.shadesFile = null; 
-    this.hipsterizedCat = null; 
-    this.hipsterizedCatImageSrc = null;
   }
 
   public getImage(shadesFile: File, catFile: File): Observable<any> {
@@ -54,8 +57,15 @@ export class HomeComponent{
     return this.http.post(
       "https://glup-ai-fa.azurewebsites.net/api/GlupHipsterCatHttpTrigger",
       formData,
-      { responseType: 'arraybuffer' }  // 'arraybuffer'|'blob'|'json'|'text'
+      { responseType: 'arraybuffer' }
     );
+  }
+
+  public reset(){
+    this.catFile = null; 
+    this.shadesFile = null; 
+    this.hipsterizedCat = null; 
+    this.hipsterizedCatImageSrc = null;
   }
 
 }

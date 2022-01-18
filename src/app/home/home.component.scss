@@ -4,7 +4,9 @@
     justify-content: center;  
 }
 
-.upload-card {
+.card {
+    min-width: 450px;
+    min-height: 300px; 
     max-width: 550px;
     padding: 20px;
     margin: 20px;
@@ -22,4 +24,8 @@
 button{
     width: fit-content;
     justify-self: center;
+}
+
+.loading-spinner {
+    margin: 50px auto;
 }

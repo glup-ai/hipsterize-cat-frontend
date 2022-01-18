@@ -2,21 +2,30 @@
 
 <app-header></app-header>
 
-  <mat-card class="upload-card" *ngIf="!hipsterizedCatImageSrc">
+  <mat-card class="card" *ngIf="!hipsterizedCatImageSrc && !isLoading">
     <mat-card-title *ngIf="!catFile"><p>Drag a file of your cat here</p></mat-card-title>
     <mat-card-title *ngIf="catFile"><p>What a beautiful cat!</p></mat-card-title>
     <app-drag-and-drop-file (fileUploaded)="catFile = $event"></app-drag-and-drop-file>
   </mat-card>
       
-  <mat-card class="upload-card" *ngIf="!hipsterizedCatImageSrc">
+  <mat-card class="card" *ngIf="!hipsterizedCatImageSrc  && !isLoading">
     <mat-card-title *ngIf="!shadesFile"><p>Drag a file of your shades here</p></mat-card-title>
     <mat-card-title *ngIf="shadesFile"><p>Cool shades 8)</p></mat-card-title>
     <app-drag-and-drop-file (fileUploaded)="shadesFile = $event"></app-drag-and-drop-file>
   </mat-card>
 
+  <mat-card class="card" *ngIf="isLoading">
+    <mat-card-title><p>Hipsterizing your cat ... </p></mat-card-title>
+    <mat-progress-spinner
+      class="loading-spinner"
+      [color]="color"
+      [mode]="mode">
+  </mat-progress-spinner>
+  </mat-card>
+
   <button (click)="hipsterizeCat()" mat-raised-button color="accent" *ngIf="!hipsterizedCatImageSrc">Hipsterize</button>
 
-  <mat-card class="upload-card" *ngIf="hipsterizedCatImageSrc">
+  <mat-card class="card" *ngIf="hipsterizedCatImageSrc">
     <mat-card-title><p>Here's your hipsterized cat!</p></mat-card-title>
     <img *ngIf="hipsterizedCatImageSrc" [src]="hipsterizedCatImageSrc" alt="Hipsterized cat" width="500">
   </mat-card>

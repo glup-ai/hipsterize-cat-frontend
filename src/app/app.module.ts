@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragAndDropFileComponent } from './drag-and-drop-file/drag-and-drop-file.component';
 import { DragAndDropFileDirective } from './drag-and-drop-file/drag-and-drop-file.directive';
 
@@ -29,6 +30,7 @@ import { DragAndDropFileDirective } from './drag-and-drop-file/drag-and-drop-fil
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
