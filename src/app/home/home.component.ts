@@ -52,7 +52,7 @@ export class HomeComponent{
     formData.append("cat", catFile, shadesFile.name);
     
     return this.http.post(
-      "https://glup-fa.azurewebsites.net/api/gluphttptrigger",
+      "https://glup-ai-fa.azurewebsites.net/api/GlupHipsterCatHttpTrigger",
       formData,
       { responseType: 'arraybuffer' }  // 'arraybuffer'|'blob'|'json'|'text'
     );
