@@ -15,7 +15,7 @@
   </mat-card>
 
   <mat-card class="card" *ngIf="isLoading">
-    <mat-card-title><p>Hipsterizing your cat ... </p></mat-card-title>
+    <mat-card-title><p>Hipsterizing your cat... </p></mat-card-title>
     <mat-progress-spinner
       class="loading-spinner"
       [color]="color"
@@ -23,7 +23,13 @@
   </mat-progress-spinner>
   </mat-card>
 
-  <button (click)="hipsterizeCat()" mat-raised-button color="accent" *ngIf="!hipsterizedCatImageSrc">Hipsterize</button>
+  <button
+    (click)="hipsterizeCat()"
+    [disabled]="isLoading"
+    mat-raised-button color="accent"
+    *ngIf="!hipsterizedCatImageSrc">
+    Hipsterize
+  </button>
 
   <mat-card class="card" *ngIf="hipsterizedCatImageSrc">
     <mat-card-title><p>Here's your hipsterized cat!</p></mat-card-title>
